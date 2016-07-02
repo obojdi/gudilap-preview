@@ -1,1 +1,78 @@
-!function(n){function t(e){if(o[e])return o[e].exports;var r=o[e]={exports:{},id:e,loaded:!1};return n[e].call(r.exports,r,r.exports,t),r.loaded=!0,r.exports}var o={};return t.m=n,t.c=o,t.p="",t(0)}([function(n,t,o){n.exports=o(1)},function(n,t){"use strict";var o=function(n,t){var o=document.getElementById(n);o.oninput=t,o.onpropertychange=o.oninput};o("id_comment",function(){console.log(this)})}]);
+// ==UserScript==
+// @name        Gudilap preview
+// @namespace   my
+// @include     http://localhost:8000/commentadd/*
+// @version     1
+// @grant       console.log
+// ==/UserScript==
+
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(1);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var oninput = function oninput(id, handler) {
+	  // http://stackoverflow.com/questions/574941/best-way-to-track-onchange-as-you-type-in-input-type-text/26202266#26202266
+	  var el = document.getElementById(id);
+	  el.oninput = handler;
+	  el.onpropertychange = el.oninput; // for IE8
+	  // el.onchange = el.oninput; // FF needs this in <select><option>...
+	};
+
+	oninput('id_comment', function () {
+	  var value = this.value;
+	  console.log(value);
+	});
+
+/***/ }
+/******/ ]);

@@ -8,6 +8,7 @@ let oninput = function (id, handler) {
 };
 
 oninput('id_comment', function () {
-  console.log(this);
+  let value = this.value;
+  console.log(value);
 });
 
