@@ -44,3 +44,12 @@ oninput('id_comment', show_preview);
 
 /* надо попробовать в кнопка изменить текстом onclick. добавив после addtag мою функцию.
  * ну или вообще свой обработчик поставить с функцией. сперва addtag, потом превью  */
+
+let after_toolbar_buttons_click = function (handler) {
+  const toolbar_buttons = document.querySelectorAll('form > input[type=button]');
+  for (const button of toolbar_buttons) {
+    button.addEventListener('click', handler);
+  }
+};
+
+after_toolbar_buttons_click(show_preview);
