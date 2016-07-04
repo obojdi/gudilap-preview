@@ -22,7 +22,7 @@ export function insert_preview_template() {
   let $form = document.querySelector('form');
   let $el = medley.createDOM(`
   
-<div class="bbcode-preview">
+<div class="bbcode-preview" style="width: ${$id_comment.offsetWidth}px">
   <div class="bbcode-preview__divider">Предпросмотр</div>
   <div class="bbcode-preview__body" id="bbcode-preview__body"></div>
 </div>

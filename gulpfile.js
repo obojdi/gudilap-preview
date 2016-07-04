@@ -8,6 +8,8 @@ const userscript_header = `
 // @namespace   my
 // @include     http://localhost:8000/commentadd/*
 // @include     http://localhost:8000/topicadd/*
+// @include     http://gudilap.ru/commentadd/*
+// @include     http://gudilap.ru/topicadd/*
 // @version     1
 // @grant       console.log
 // @grant       GM_addStyle

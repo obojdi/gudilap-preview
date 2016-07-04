@@ -3,6 +3,8 @@
 // @namespace   my
 // @include     http://localhost:8000/commentadd/*
 // @include     http://localhost:8000/topicadd/*
+// @include     http://gudilap.ru/commentadd/*
+// @include     http://gudilap.ru/topicadd/*
 // @version     1
 // @grant       console.log
 // @grant       GM_addStyle
@@ -158,7 +160,7 @@
 
 	function insert_preview_template() {
 	  var $form = document.querySelector('form');
-	  var $el = medley.createDOM('\n  \n<div class="bbcode-preview">\n  <div class="bbcode-preview__divider">Предпросмотр</div>\n  <div class="bbcode-preview__body" id="bbcode-preview__body"></div>\n</div>\n  \n  ');
+	  var $el = medley.createDOM('\n  \n<div class="bbcode-preview" style="width: ' + $id_comment.offsetWidth + 'px">\n  <div class="bbcode-preview__divider">Предпросмотр</div>\n  <div class="bbcode-preview__body" id="bbcode-preview__body"></div>\n</div>\n  \n  ');
 	  $form.appendChild($el);
 	}
 
