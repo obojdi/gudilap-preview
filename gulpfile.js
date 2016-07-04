@@ -18,8 +18,6 @@ const userscript_header = `
 // ==/UserScript==
 `.trim() + "\n\n";
 
-https://raw.githubusercontent.com/pongo/gudilap-preview/master/README.md
-
 gulp.task('copy-meta', function() {
   return file('gudilap-preview.meta.js', userscript_header, {src: true})
     .pipe(gulp.dest('build/'));
