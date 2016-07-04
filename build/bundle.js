@@ -502,7 +502,7 @@
 	                    }
 	                }
 
-	                return '<a href="' + myUrl + '">';
+	                return '<a href="' + myUrl + '" target="_blank">';
 	            },
 	            closeTag: function closeTag(params, content) {
 	                return '</a>';
@@ -791,9 +791,10 @@
 
 	        // убираем пустые <a>
 	        ret.html = ret.html.replace(/<a>(.+?)<\/a>/g, '$1');
+	        ret.html = ret.html.replace(/<a target="_blank">(.+?)<\/a>/g, '$1');
 
 	        // plain urls to <a>
-	        ret.html = ret.html.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1">$1</a>');
+	        ret.html = ret.html.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="_blank">$1</a>');
 
 	        ret.error = errQueue.length !== 0;
 	        ret.errorQueue = errQueue;
