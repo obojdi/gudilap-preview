@@ -9,6 +9,7 @@ const userscript_header = `
 // @include     http://localhost:8000/commentadd/*
 // @version     1
 // @grant       console.log
+// @grant       GM_addStyle
 // ==/UserScript==
 `.trim() + "\n\n";
 
