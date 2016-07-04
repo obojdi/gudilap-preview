@@ -18,12 +18,12 @@ const userscript_header = `
 // ==/UserScript==
 `.trim() + "\n\n";
 
-gulp.task('copy-meta', function() {
+gulp.task('create-meta-file', function() {
   return file('gudilap-preview.meta.js', userscript_header, {src: true})
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('default', ['copy-meta'], function() {
+gulp.task('default', ['create-meta-file'], function() {
   return gulp.src('src/index.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(header(userscript_header))
