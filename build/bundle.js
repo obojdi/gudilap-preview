@@ -62,33 +62,26 @@
 
 	'use strict';
 
-	var _medley = __webpack_require__(2);
+	var _page = __webpack_require__(2);
 
-	var medley = _interopRequireWildcard(_medley);
+	var page = _interopRequireWildcard(_page);
 
-	var _index = __webpack_require__(7);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	var _xbbcode = __webpack_require__(3);
+	var _xbbcode = __webpack_require__(4);
 
 	var _xbbcode2 = _interopRequireDefault(_xbbcode);
+
+	var _index = __webpack_require__(8);
+
+	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	var oninput = function oninput(id, handler) {
-	  // http://stackoverflow.com/questions/574941/best-way-to-track-onchange-as-you-type-in-input-type-text/26202266#26202266
-	  var $el = document.getElementById(id);
-	  $el.oninput = handler;
-	  $el.onpropertychange = $el.oninput; // for IE8
-	  // $el.onchange = $el.oninput; // FF needs this in <select><option>...
-	};
+	GM_addStyle(_index2.default);
 
-	var $id_comment = document.getElementById('id_comment');
 	var show_preview = function show_preview() {
-	  var value = $id_comment.value;
+	  var value = page.$id_comment.value;
 	  var $preview = document.getElementById('bbcode-preview__body');
 	  if ($preview) {
 	    $preview.innerHTML = _xbbcode2.default.process({
@@ -98,21 +91,43 @@
 	  }
 	};
 
-	var insert_preview_template = function insert_preview_template() {
-	  var $form = document.querySelector('form');
-	  var $el = medley.createDOM('\n  \n<div class="bbcode-preview">\n  <div class="bbcode-preview__divider">Предпросмотр</div>\n  <div class="bbcode-preview__body" id="bbcode-preview__body"></div>\n</div>\n  \n  \n  ');
-	  $form.appendChild($el);
+	page.insert_preview_template(); // вставляем шаблон предпросмотра
+	page.textarea_input(show_preview); // когда вводят текст в поле - генерируем предпросмотр
+	page.after_toolbar_buttons_click(show_preview); // если нажимают кнопки тулбара - генерируем предпросмотр
+	show_preview(); // сразу генерируем предпросмотр на тот случай, если текст в поле уже есть
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.$id_comment = undefined;
+	exports.after_toolbar_buttons_click = after_toolbar_buttons_click;
+	exports.insert_preview_template = insert_preview_template;
+	exports.textarea_input = textarea_input;
+
+	var _medley = __webpack_require__(3);
+
+	var medley = _interopRequireWildcard(_medley);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var textarea_id = 'id_comment';
+	var $id_comment = exports.$id_comment = document.getElementById(textarea_id);
+
+	var oninput = function oninput(id, handler) {
+	  // http://stackoverflow.com/a/26202266/136559
+	  var $el = document.getElementById(id);
+	  $el.oninput = handler;
+	  $el.onpropertychange = $el.oninput; // for IE8
+	  // $el.onchange = $el.oninput; // FF needs this in <select><option>...
 	};
 
-	GM_addStyle(_index2.default);
-	insert_preview_template();
-	show_preview();
-	oninput('id_comment', show_preview);
-
-	/* надо попробовать в кнопка изменить текстом onclick. добавив после addtag мою функцию.
-	 * ну или вообще свой обработчик поставить с функцией. сперва addtag, потом превью  */
-
-	var after_toolbar_buttons_click = function after_toolbar_buttons_click(handler) {
+	function after_toolbar_buttons_click(handler) {
 	  var toolbar_buttons = document.querySelectorAll('form > input[type=button]');
 	  var _iteratorNormalCompletion = true;
 	  var _didIteratorError = false;
@@ -138,12 +153,20 @@
 	      }
 	    }
 	  }
-	};
+	}
 
-	after_toolbar_buttons_click(show_preview);
+	function insert_preview_template() {
+	  var $form = document.querySelector('form');
+	  var $el = medley.createDOM('\n  \n<div class="bbcode-preview">\n  <div class="bbcode-preview__divider">Предпросмотр</div>\n  <div class="bbcode-preview__body" id="bbcode-preview__body"></div>\n</div>\n  \n  ');
+	  $form.appendChild($el);
+	}
+
+	function textarea_input(handler) {
+	  oninput(textarea_id, handler);
+	}
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -240,7 +263,7 @@
 	}
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {"use strict";
@@ -786,13 +809,13 @@
 	}
 
 	exports.default = { XBBCODE: XBBCODE };
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
@@ -803,7 +826,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/*
@@ -859,7 +882,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1111,16 +1134,16 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(4);
+	var content = __webpack_require__(5);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1137,7 +1160,7 @@
 	}
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
