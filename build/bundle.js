@@ -2,6 +2,7 @@
 // @name        Gudilap preview
 // @namespace   my
 // @include     http://localhost:8000/commentadd/*
+// @include     http://localhost:8000/topicadd/*
 // @version     1
 // @grant       console.log
 // @grant       GM_addStyle
