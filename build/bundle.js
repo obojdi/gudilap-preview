@@ -112,6 +112,36 @@
 	/* надо попробовать в кнопка изменить текстом onclick. добавив после addtag мою функцию.
 	 * ну или вообще свой обработчик поставить с функцией. сперва addtag, потом превью  */
 
+	var after_toolbar_buttons_click = function after_toolbar_buttons_click(handler) {
+	  var toolbar_buttons = document.querySelectorAll('form > input[type=button]');
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = toolbar_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var button = _step.value;
+
+	      button.addEventListener('click', handler);
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+	};
+
+	after_toolbar_buttons_click(show_preview);
+
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
