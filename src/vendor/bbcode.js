@@ -3,7 +3,7 @@
 var VERSION = '0.4.0',
 // default options
     defaults = {
-        showQuotePrefix: true,
+        showQuotePrefix: false,
         classPrefix: 'bbcode_',
         mentionPrefix: '@'
     };
@@ -121,7 +121,7 @@ function tagReplace(options, fullMatch, tag, params, value) {
 
     switch (tag) {
         case 'quote':
-            val = '<div class="' + options.classPrefix + 'quote"';
+            let author = '';
             for (i in params) {
                 tmp = params[i];
                 if (!inlineValue && (i === 'author' || i === 'name')) {
@@ -130,23 +130,22 @@ function tagReplace(options, fullMatch, tag, params, value) {
                     val += ' data-' + i + '="' + tmp + '"';
                 }
             }
-            return val + '>' + (inlineValue ? inlineValue + ' wrote:' : (options.showQuotePrefix ? 'Quote:' : '')) + '<blockquote>' + value + '</blockquote></div>';
+
+            if (inlineValue) {
+                author = `<em>${inlineValue}</em><br>`;
+            }
+
+          return `<blockquote>${author}${value}</blockquote>`;
         case 'url':
-            return '<a class="' + options.classPrefix + 'link" target="_blank" href="' + (inlineValue || value) + '">' + value + '</a>';
-        case 'email':
-            return '<a class="' + options.classPrefix + 'link" target="_blank" href="mailto:' + (inlineValue || value) + '">' + value + '</a>';
-        case 'anchor':
-            return '<a name="' + (inlineValue || params.a || value) + '">' + value + '</a>';
+            return '<a href="' + (inlineValue || value) + '">' + value + '</a>';
         case 'b':
             return '<strong>' + value + '</strong>';
         case 'i':
             return '<em>' + value + '</em>';
         case 'u':
-            return '<span style="text-decoration:underline">' + value + '</span>';
+            return '<u>' + value + '</u>';
         case 's':
-            return '<span style="text-decoration:line-through">' + value + '</span>';
-        case 'indent':
-            return '<blockquote>' + value + '</blockquote>';
+            return '<strike>' + value + '</strike>';
         case 'list':
             tag = 'ul';
             className = options.classPrefix + 'list';
@@ -167,60 +166,7 @@ function tagReplace(options, fullMatch, tag, params, value) {
             val += doReplace(value, [{e: '\\[([*])\\]([^\r\n\\[\\<]+)', func: listItemReplace}], options);
             return val + '</' + tag + '>';
         case 'code':
-        case 'php':
-        case 'java':
-        case 'javascript':
-        case 'cpp':
-        case 'ruby':
-        case 'python':
-            return '<pre class="' + options.classPrefix + (tag === 'code' ? '' : 'code_') + tag + '">' + value + '</pre>';
-        case 'highlight':
-            return '<span class="' + options.classPrefix + tag + '">' + value + '</span>';
-        case 'html':
-            return value;
-        case 'mention':
-            val = '<span class="' + options.classPrefix + 'mention"';
-            if (inlineValue) {
-                val += ' data-mention-id="' + inlineValue + '"';
-            }
-            return val + '>' + (options.mentionPrefix || '') + value + '</span>';
-        case 'span':
-        case 'h1':
-        case 'h2':
-        case 'h3':
-        case 'h4':
-        case 'h5':
-        case 'h6':
-            return '<' + tag + '>' + value + '</' + tag + '>';
-        case 'youtube':
-            return '<object class="' + options.classPrefix + 'video" width="425" height="350"><param name="movie" value="http://www.youtube.com/v/' + value + '"></param><embed src="http://www.youtube.com/v/' + value + '" type="application/x-shockwave-flash" width="425" height="350"></embed></object>';
-        case 'gvideo':
-            return '<embed class="' + options.classPrefix + 'video" style="width:400px; height:325px;" id="VideoPlayback" type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=' + value + '&amp;hl=en">';
-        case 'google':
-            return '<a class="' + options.classPrefix + 'link" target="_blank" href="http://www.google.com/search?q=' + (inlineValue || value) + '">' + value + '</a>';
-        case 'wikipedia':
-            return '<a class="' + options.classPrefix + 'link" target="_blank" href="http://www.wikipedia.org/wiki/' + (inlineValue || value) + '">' + value + '</a>';
-        case 'img':
-            var dims = new RegExp('^(\\d+)x(\\d+)$').exec(inlineValue || '');
-            if (!dims || (dims.length !== 3)) {
-                dims = new RegExp('^width=(\\d+)\\s+height=(\\d+)$').exec(inlineValue || '');
-            }
-            if (dims && dims.length === 3) {
-                params = undefined;
-            }
-            val = '<img class="' + options.classPrefix + 'image" src="' + value + '"';
-            if (dims && dims.length === 3) {
-                val += ' width="' + dims[1] + '" height="' + dims[2] + '"';
-            } else {
-                for (i in params) {
-                    tmp = params[i];
-                    if (i === 'img') {
-                        i = 'alt';
-                    }
-                    val += ' ' + i + '="' + tmp + '"';
-                }
-            }
-            return val + '/>';
+            return '<div class="code"><pre>' + value + '</pre></div>';
     }
     // return the original
     return fullMatch;
