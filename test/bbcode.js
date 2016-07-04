@@ -24,7 +24,7 @@ describe('BBCode render', function () {
 [url=http://getelementbyid.ru/]url[/url]
 [url=#2]url[/url]
 http://getelementbyid.ru/`.trim(),
-    html: `<strong>bold</strong><br><em>italic</em><br><u>underline</u><br><strike>strike</strike><br><blockquote>quote</blockquote><blockquote><em>nickname</em><br>quote nickname 1</blockquote><blockquote><em>nickname</em><br>quote nickname 2</blockquote><ol><li>ol<br></li><li>first<br></li><li>second</li></ol><ul><li>ul<br></li><li>111<br></li><li>222</li></ul><a href="http://getelementbyid.ru/">url</a><br><a href="http://getelementbyid.ru/">url</a><br>url<br><a href="http://getelementbyid.ru/">http://getelementbyid.ru/</a>`.trim()//.replace(/<br>/g, '\n')
+    html: `<strong>bold</strong><br><em>italic</em><br><u>underline</u><br><strike>strike</strike><br><blockquote>quote</blockquote><blockquote><em>nickname</em><br>quote nickname 1</blockquote><blockquote><em>nickname</em><br>quote nickname 2</blockquote><ol><li>ol</li><li>first</li><li>second</li></ol><ul><li>ul<br></li><li>111</li><li>222</li></ul><a href="http://getelementbyid.ru/">url</a><br><a href="http://getelementbyid.ru/">url</a><br>url<br><a href="http://getelementbyid.ru/">http://getelementbyid.ru/</a>`.trim()//.replace(/<br>/g, '\n')
   };
 
   const quotes = {
