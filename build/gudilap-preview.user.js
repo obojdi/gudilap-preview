@@ -6,7 +6,7 @@
 // @include     http://www.gudilap.ru/commentadd/*
 // @include     http://gudilap.ru/topicadd/*
 // @include     http://www.gudilap.ru/topicadd/*
-// @version     2
+// @version     3
 // @grant       console.log
 // @grant       GM_addStyle
 // @updateURL   https://github.com/pongo/gudilap-preview/raw/master/build/gudilap-preview.meta.js
@@ -122,8 +122,8 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	var textarea_id = 'id_comment';
-	var $id_comment = exports.$id_comment = document.getElementById(textarea_id);
+	var TEXTAREA_ID = 'id_comment';
+	var $id_comment = exports.$id_comment = document.getElementById(TEXTAREA_ID);
 
 	var oninput = function oninput(id, handler) {
 	  // http://stackoverflow.com/a/26202266/136559
@@ -132,6 +132,53 @@
 	  $el.onpropertychange = $el.oninput; // for IE8
 	  // $el.onchange = $el.oninput; // FF needs this in <select><option>...
 	};
+
+	function insert_tag_even_if_empty(tag) {
+	  var selectedText = $id_comment.value.substring($id_comment.selectionStart, $id_comment.selectionEnd);
+	  if (selectedText.length > 0) return;
+
+	  var beforeText = $id_comment.value.substring(0, $id_comment.selectionStart);
+	  var afterText = $id_comment.value.substring($id_comment.selectionEnd, $id_comment.value.length);
+	  var tagOpen = '';
+	  var tagClose = '';
+	  var tagLower = tag.toLowerCase();
+
+	  switch (tagLower) {
+	    case 'url':
+	      return;
+	    case 'strike':
+	      tagOpen = '[s]';
+	      tagClose = '[/s]';
+	      break;
+	    default:
+	      tagOpen = '[' + tagLower + ']';
+	      tagClose = '[/' + tagLower + ']';
+	      break;
+	  }
+
+	  if (tagOpen.length === 0 && tagClose.length === 0) return;
+
+	  $id_comment.value = '' + beforeText + tagOpen + tagClose + afterText;
+	  setCaretPosition(TEXTAREA_ID, ('' + beforeText + tagOpen).length); // перемещаем курсор по центру тега
+	}
+
+	// http://stackoverflow.com/a/512542/136559
+	function setCaretPosition(elemId, caretPos) {
+	  var elem = document.getElementById(elemId);
+
+	  if (elem != null) {
+	    if (elem.createTextRange) {
+	      var range = elem.createTextRange();
+	      range.move('character', caretPos);
+	      range.select();
+	    } else {
+	      if (elem.selectionStart) {
+	        elem.focus();
+	        elem.setSelectionRange(caretPos, caretPos);
+	      } else elem.focus();
+	    }
+	  }
+	}
 
 	function after_toolbar_buttons_click(handler) {
 	  var toolbar_buttons = document.querySelectorAll('form > input[type=button]');
@@ -143,6 +190,14 @@
 	    for (var _iterator = toolbar_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	      var button = _step.value;
 
+
+	      // вызываем эту функцию как бы до события click
+	      // если никакой текст не выделен - то вставляем пустые теги
+	      button.addEventListener('mouseup', function (e) {
+	        insert_tag_even_if_empty(this.value);
+	      });
+
+	      // после нажатия кнопки вызываем handler
 	      button.addEventListener('click', handler);
 	    }
 	  } catch (err) {
@@ -168,7 +223,7 @@
 	}
 
 	function textarea_input(handler) {
-	  oninput(textarea_id, handler);
+	  oninput(TEXTAREA_ID, handler);
 	}
 
 /***/ },
