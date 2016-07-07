@@ -1,7 +1,7 @@
 import * as medley from './vendor/140medley';
 
-const textarea_id = 'id_comment';
-export let $id_comment = document.getElementById(textarea_id);
+const TEXTAREA_ID = 'id_comment';
+export let $id_comment = document.getElementById(TEXTAREA_ID);
 
 let oninput = function (id, handler) {
   // http://stackoverflow.com/a/26202266/136559
@@ -32,5 +32,5 @@ export function insert_preview_template() {
 }
 
 export function textarea_input(handler) {
-  oninput(textarea_id, handler);
+  oninput(TEXTAREA_ID, handler);
 }
