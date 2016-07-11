@@ -517,7 +517,7 @@ var XBBCODE = (function() {
         // убираем лишние <br> вокруг блоковых тегов
         ret.html = ret.html.replace(/\r?\n|\r/g, '<br>');
         ret.html = ret.html.replace(/(<\/blockquote>|<\/ol>|<\/ul>|<\/li>|<ol>|<ul>)<br>/g, '$1');
-        ret.html = ret.html.replace(/<br>(<li>)/g, '$1');
+        //ret.html = ret.html.replace(/<br>(<li>)/g, '$1');
 
         // убираем пустые <a>
         ret.html = ret.html.replace(/<a>(.+?)<\/a>/g, '$1');

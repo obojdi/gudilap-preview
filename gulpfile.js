@@ -12,7 +12,7 @@ const userscript_header = `
 // @include     http://www.gudilap.ru/commentadd/*
 // @include     http://gudilap.ru/topicadd/*
 // @include     http://www.gudilap.ru/topicadd/*
-// @version     3
+// @version     4
 // @grant       console.log
 // @grant       GM_addStyle
 // @updateURL   https://github.com/pongo/gudilap-preview/raw/master/build/gudilap-preview.meta.js
